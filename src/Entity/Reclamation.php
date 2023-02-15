@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ReclamationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReclamationRepository::class)]
@@ -24,6 +25,9 @@ class Reclamation
 
     #[ORM\OneToMany(mappedBy: 'description', targetEntity: Reponse::class)]
     private Collection $reponses;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $createdAt = null;
 
     public function __construct()
     {
@@ -85,6 +89,18 @@ class Reclamation
                 $reponse->setDescription(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
