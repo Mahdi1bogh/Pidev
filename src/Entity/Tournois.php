@@ -6,6 +6,8 @@ use App\Repository\TournoisRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: TournoisRepository::class)]
 class Tournois
@@ -15,21 +17,27 @@ class Tournois
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message:"Titre is required")]
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
+    #[Assert\NotBlank(message:"Date is required")]
+    #[Assert\GreaterThanOrEqual("now")]
     #[ORM\Column]
     private ?\DateTimeImmutable $dateTour = null;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
+    #[Assert\NotBlank(message:"Decscription is required")]
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
+    #[Assert\NotBlank(message:"Localisation is required")]
     #[ORM\Column(length: 255)]
     private ?string $localisation = null;
 
+    #[Assert\NotBlank(message:"Type is required")]
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
@@ -45,6 +53,8 @@ class Tournois
     {
         return $this->id;
     }
+
+  
 
     public function getTitle(): ?string
     {
@@ -147,4 +157,10 @@ class Tournois
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getId();
+    }
+
 }

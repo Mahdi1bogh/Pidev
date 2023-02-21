@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Tournois;
+use App\Repository\TournoisRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,11 +50,22 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/tournois', name: 'app_tournois')]
-    public function index5(): Response
+  
+
+    #[Route('/tournoisfront', name: 'app_tournois', methods: ['GET'])]
+    public function index5(TournoisRepository $tournoisRepository): Response
     {
         return $this->render('home/tournois.html.twig', [
-            'controller_name' => 'HomeController',
+            'tournois' => $tournoisRepository->findAll(),
+        ]);
+    }
+
+
+    #[Route('/tournoisdetails/{id}', name: 'app_details', methods: ['GET'])]
+    public function show(Tournois $tournoi): Response
+    {
+        return $this->render('home/tournoisdetails.html.twig', [
+            'tournoi' => $tournoi,
         ]);
     }
 
