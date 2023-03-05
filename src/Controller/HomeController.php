@@ -92,4 +92,30 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+
+    #[Route('/calender', name: 'app_calender')]
+    public function calender(TournoisRepository $calendar)
+    {
+        $events = $calendar->findAll();
+
+        $rdvs = [];
+
+        foreach($events as $event){
+            $rdvs[] = [
+                'id' => $event->getId(),
+                'start' => $event->getDateTour()->format('Y-m-d H:i:s'),
+                'end' => $event->getDateFin()->format('Y-m-d H:i:s'),
+                'title' => $event->getTitle(),
+                'description' => $event->getDescription(),
+                
+            ];
+        }
+
+        $data = json_encode($rdvs);
+
+        return $this->render('home/calendar.html.twig', compact('data'));
+    }
+
+
+ 
 }

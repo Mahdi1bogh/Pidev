@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class TournoisType extends AbstractType
 {
@@ -16,6 +17,7 @@ class TournoisType extends AbstractType
         $builder
             ->add('title')
             ->add('dateTour')
+            ->add('dateFin')
             ->add('photo', FileType::class, [
                 'label' => 'votre affiche du tournois (des ficjiers image uniquement)',
                 // unmapped means that this field is not associated to any entity property

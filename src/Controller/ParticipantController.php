@@ -14,6 +14,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twilio\Rest\Client;
+
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
+
 
 #[Route('/participant')]
 class ParticipantController extends AbstractController
@@ -81,7 +87,7 @@ class ParticipantController extends AbstractController
         return $this->redirectToRoute('app_participant_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/participer/{id}', name: 'app_participer')]
+    #[Route('/participer/{id}', name: 'app_participer' , methods: ['GET', 'POST'])]
     public function participer($id,ManagerRegistry $doctrine ,TournoisRepository $rep2,UserRepository $rep,Request $request): Response
     {
 
@@ -96,9 +102,62 @@ class ParticipantController extends AbstractController
             $em =$doctrine->getManager();
             $em->persist($participation);
             $em->flush();
-
+            if ($request->isMethod('POST')) {
+                // Get the Twilio client instance
+                $client = new Client($this->getParameter('twilio.account_sid'), $this->getParameter('twilio.auth_token'));
+        
+                // Send an SMS message
+                $client->messages->create(
+                    // The phone number to send the SMS to
+                    '+21693337077',
+                    array(
+                        // The phone number the SMS is from
+                        'from' => $this->getParameter('twilio.from_number'),
+                        // The body of the SMS message
+                        'body' => 'Votre participation à été crée avec succés '
+                    )
+                );
+            }        
 
 
         return $this->redirectToRoute('app_tournois');
     }
+
+
+    
+    #[Route('/pdfparticiper/{id}', name: 'app_pdfparticiper', methods: ['GET'])]
+    public function PDFParticipant(ParticipantRepository $participantRepository): Response
+    {
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($pdfOptions);
+        $html =  $this->render('participant/pdfpart.html.twig', [
+            'participants' => $participantRepository->findAll(),
+        ]);
+    
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+    
+        $dompdf->render();
+        $dompdf->stream("Participantpdf.pdf", [
+            "participants" => true
+        ]);
+       return $this->redirectToRoute('app_participant_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    
+
+    
+ 
+
+    
+
+
 }
+
+
+
+
+
+

@@ -25,7 +25,7 @@ class Tournois
     #[Assert\GreaterThanOrEqual("now")]
     #[ORM\Column]
     private ?\DateTimeImmutable $dateTour = null;
-
+       
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
@@ -41,8 +41,11 @@ class Tournois
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\OneToMany(mappedBy: 'tournois', targetEntity: Participant::class)]
+    #[ORM\OneToMany(mappedBy: 'tournois', targetEntity: Participant::class )]
     private Collection $participants;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $dateFin = null;
 
     public function __construct()
     {
@@ -161,6 +164,18 @@ class Tournois
     public function __toString()
     {
         return $this->getId();
+    }
+
+    public function getDateFin(): ?\DateTimeImmutable
+    {
+        return $this->dateFin;
+    }
+
+    public function setDateFin(\DateTimeImmutable $dateFin): self
+    {
+        $this->dateFin = $dateFin;
+
+        return $this;
     }
 
 }

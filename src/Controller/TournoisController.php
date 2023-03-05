@@ -2,19 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Participant;
 use App\Entity\Tournois;
-use App\Entity\User;
 use App\Form\TournoisType;
 use App\Repository\TournoisRepository;
-use App\Repository\UserRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
+
 
 #[Route('/tournois')]
 class TournoisController extends AbstractController
@@ -57,7 +55,8 @@ class TournoisController extends AbstractController
                 $tournoi->setImage($newFilename);
             }
             $tournoisRepository->save($tournoi, true);
-
+             // Check if the form was submitted
+        
             return $this->redirectToRoute('app_tournois_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -124,6 +123,5 @@ class TournoisController extends AbstractController
         return $this->redirectToRoute('app_tournois_index', [], Response::HTTP_SEE_OTHER);
     }
 
- 
 
 }

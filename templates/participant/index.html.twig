@@ -44,12 +44,14 @@
                                             <div class="row g-4 mb-3">
                                                 <div class="col-sm-auto">
                                                     <div>
-                                                        <a href="{{ path('app_participant_new') }}">Ajouter</a>
+                                                        <a href="{{ path('app_participant_new') }}"  type="button" class="btn btn-success waves-effect waves-light">Ajouter</a>
+                                                        <a href="{{ path('app_pdfparticiper', {'id': 2}) }}"  type="button" class="btn btn-dark waves-effect waves-light" >Télécharger PDF</a>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm">
                                                     <div class="d-flex justify-content-sm-end">
                                                         <div class="search-box ms-2">
+                                                           
                                                             <input type="text" class="form-control search" placeholder="Search...">
                                                             <i class="ri-search-line search-icon"></i>
                                                         </div>
@@ -69,9 +71,10 @@
                                                             
                  
                                                             <th class="sort" >Id</th>
-                                                            <th class="sort" >Id-user</th>
-                                                            <th class="sort" >Id-tournois</th>
-                                                            <th class="sort" data-sort="date">DateP</th>
+                                                            <th class="sort" >Nom</th>
+                                                            <th class="sort" >Prénom</th>
+                                                            <th class="sort" >Tournois</th>
+                                                            <th class="sort" data-sort="date">Date Participation</th>
                                                            
                                                             <th class="sort" data-sort="action">Action</th>
                                                             </tr>
@@ -86,18 +89,19 @@
                                                             </th>
                                                             <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
                                                             <td class="customer_name">{{ participant.id }}</td>
-                                                            <td class="email">{{ participant.users }}</td>
-                                                            <td class="phone">{{ participant.tournois }}</td>
+                                                            <td class="email">{{ participant.users.nom }}</td>
+                                                            <td class="email">{{ participant.users.prenom }}</td>
+                                                            <td class="phone">{{ participant.tournois.title }}</td>
                                                             <td class="date">{{ participant.dateP ? participant.dateP|date('Y-m-d H:i:s') : '' }}</td>
                                                             
                                                             <td>
                                                                 <div class="d-flex gap-2">
                                                                     <div class="edit">
-                                                                    <a href="{{ path('app_participant_edit', {'id': participant.id}) }}">edit</a>
+                                                                    <a href="{{ path('app_participant_edit', {'id': participant.id}) }}" type="button" class="btn btn-warning waves-effect waves-light">Modifier</a>
                                                                     
                                                                     </div>
                                                                     <div class="remove">
-                                                                       <a href="{{ path('app_participant_show', {'id': participant.id}) }}">show</a>
+                                                                       <a type="button" >{{ include('participant/_delete_form.html.twig') }}</a>
                                                                     </div>
                                                                 </div>
                                                             </td>

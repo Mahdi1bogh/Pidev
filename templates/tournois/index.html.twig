@@ -47,7 +47,7 @@
                                             <div class="row g-4 mb-3">
                                                 <div class="col-sm-auto">
                                                     <div>
-                                                        <a href="{{ path('app_tournois_new') }}">Ajouter</a>
+                                                        <a href="{{ path('app_tournois_new') }}" type="button" class="btn btn-success waves-effect waves-light">Ajouter</a>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm">
@@ -73,7 +73,8 @@
                  
                                                             <th class="sort" >Id</th>
                                                             <th class="sort" >Title</th>
-                                                            <th class="sort" >Date-tour</th>
+                                                            <th class="sort" >Date-debut</th>
+                                                            <th class="sort" >Date-fin</th>
                                                             <th class="sort" >Photo</th>
                                                              
                                                              <th class="sort">Description</th>
@@ -94,6 +95,7 @@
                                                             <td class="customer_name">{{ tournoi.id }}</td>
                                                             <td class="email">{{ tournoi.title }}</td>
                                                             <td class="phone">{{ tournoi.dateTour ? tournoi.dateTour|date('Y-m-d') : '' }}</td>
+                                                            <td class="phone">{{ tournoi.dateFin ? tournoi.dateFin|date('Y-m-d') : '' }}</td>
                                                             <td class="date"> <img src="{{asset('uploads/tournois/' ~ tournoi.image)}}" heigth="50" width="50"></td>
                                                              <td class="email">{{ tournoi.description }}</td>
                                                             <td class="phone">{{ tournoi.localisation }}</td>
@@ -102,11 +104,11 @@
                                                             <td>
                                                                 <div class="d-flex gap-2">
                                                                     <div class="edit">
-                                                                                       <a href="{{ path('app_tournois_edit', {'id': tournoi.id}) }}">edit</a>
+                                                                                       <a href="{{ path('app_tournois_edit', {'id': tournoi.id}) }}"  type="button" class="btn btn-warning waves-effect waves-light">Modifier</a>
                                                                     
                                                                     </div>
                                                                     <div class="remove">
-                                                                      <a href="{{ path('app_tournois_show', {'id': tournoi.id}) }}">show</a>
+                                                                      <a  type="button">{{ include('tournois/_delete_form.html.twig') }}</a>
                                                                     </div>
                                                                 </div>
                                                             </td>
