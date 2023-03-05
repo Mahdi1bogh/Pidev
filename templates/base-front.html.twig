@@ -71,7 +71,16 @@
                                     </li>
                                     <li>
                                         <div class="header-user-login">
-                                            <a href="#"><i class="fas fa-user"></i>Se connecter</a>
+                                        {% if app.user %}
+                                            <a href={{path('app_logout')}}><i class="fas fa-user"></i>Logout </a>
+                                        {% else %}
+                                        <a href={{path('app_login')}}><i class="fas fa-user"></i>Se connecter</a>
+                                           
+                                        {% endif %}
+                                              <a href={{path('app_signup')}}><i class="fas fa-user"></i>Creer Compte</a>
+                                              {% if is_granted('ROLE_ADMIN') %}
+                                            <a href={{path('app_admin')}}><i class="fas fa-user"></i>Accés Dashboard </a>
+                                            {% endif %}
                                         </div>
                                     </li>
                                 </ul>
@@ -92,33 +101,37 @@
                                 </div>
                                 <div id="mobile-menu" class="navbar-wrap d-none d-lg-flex">
                                     <ul>
-                                        <li><a href="{{path('app_home')}}">ACCEUIL</a></li>
-                                        <li><a href="{{path('app_club')}}">CLUB</a></li>
-                                        <li><a href="{{path('app_tournois')}}">TOURNOIS</a></li>
-                                        <li><a href="{{path('app_magasin')}}">MAGASIN</a></li>
-                                        <li><a href="{{path('app_reclamation')}}">RECLAMATION</a></li>
-                                        <li><a href="{{path('app_about')}}">ABOUT</a></li>
+                                        <li><a href={{path('app_home')}}>ACCEUIL</a></li>
+                                        <li><a href={{path('app_club')}}>CLUB</a></li>
+                                        <li><a href={{path('app_tournois')}}>TOURNOIS</a></li>
+                                        <li><a href={{path('app_magasin')}}>MAGASIN</a></li>
+                                        <li><a href={{path('app_reclamation')}}>RECLAMATION</a></li>
+                                      
+                                        <li><a href={{path('app_about')}}>ABOUT</a></li>
+                                         
+                                          <li><a href={{path('app_profile')}}>Profile</a></li>
+                                        
                                     </ul>
                                 </div>
                                 <div class="header-action">
                                     <ul>
-                                        <li class="header-shop-cart"><a href="#"><i
+                                        <li class="header-shop-cart"><a href={{path('app_panier')}}><i
                                                     class="fas fa-shopping-basket"></i><span>0</span></a>
                                             <ul class="minicart">
                                                 <li class="d-flex align-items-start">
                                                     <div class="cart-img">
                                                         <a href="#">
-                                                            <img src="{{asset('front-office/img/product/cart_p01.jpg')}}" alt="">
+                                                            <img src="{{asset('front-office/img/product/product_img03.jpg')}}" alt="">
                                                         </a>
                                                     </div>
                                                     <div class="cart-content">
                                                         <h4>
-                                                            <a href="#">Xbox One Controller</a>
+                                                            <a href="#">gilet de tir fair</a>
                                                         </h4>
                                                         <div class="cart-price">
-                                                            <span class="new">$229.9</span>
+                                                            <span class="new">80.00DNT</span>
                                                             <span>
-                                                                <del>$229.9</del>
+                                                                <del>80.00DNT</del>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -131,12 +144,12 @@
                                                 <li>
                                                     <div class="total-price">
                                                         <span class="f-left">Total:</span>
-                                                        <span class="f-right">$239.9</span>
+                                                        <span class="f-right">80.00DNT</span>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="checkout-link">
-                                                        <a href="cart.html">Shopping Cart</a>
+                                                        <a href=href={{path('app_panier')}}>Panier</a>
                                                         <a class="red-color" href="checkout.html">Checkout</a>
                                                     </div>
                                                 </li>
@@ -179,7 +192,7 @@
                             <h6 class="wow fadeInDown" data-wow-delay=".2s">TIR-X</h6>
                             <h2 class="tlt fix" data-in-effect="fadeInLeft">Tir <span>sportif</span></h2>
                             <p class="wow fadeInUp" data-wow-delay="2s">La passion est un désir qui se mue en plaisir, qui vibre à l'unisson d'un rêve que l'on touche du bout du coeur.</p>
-                            <a href="#" class="btn wow fadeInUp" data-wow-delay="2.2s">
+                            <a href={{path('app_about')}} class="btn wow fadeInUp" data-wow-delay="2.2s">
                                 En savoir plus</a>
                         </div>
                     </div>
@@ -254,7 +267,7 @@
                                 <p>Le tir sportif est un sport individuel qui consiste à envoyer, au moyen d'une arme à feu, un projectile sur une cible le plus précisément possible pour toucher le centre de celle-ci et obtenir un maximum de points.</p>
                                 <p></p>
                                 <div class="about-btn">
-                                    <a href="#" class="btn">En savoir plus</a>
+                                    <a href={{path('app_about')}} class="btn">En savoir plus</a>
                                 </div>
                             </div>
                         </div>
@@ -375,6 +388,8 @@
     </main>
     <!-- main-area-end -->
     {% endblock %}
+    {% block footer %}
+
     <!-- footer-area -->
     <footer>
         <div class="footer-top footer-bg">
@@ -383,10 +398,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <div class="newsletter-wrap">
-                               
-                             
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -424,11 +436,11 @@
                             </div>
                             <div class="fw-link">
                                 <ul>
-                                    <li><a href="{{path('app_home')}}">ACCEUIL</a></li>
-                                        <li><a href="{{path('app_club')}}">CLUB</a></li>
-                                        <li><a href="{{path('app_tournois')}}">TOURNOIS</a></li>
-                                        <li><a href="{{path('app_magasin')}}">MAGASIN</a></li>
-                                        <li><a href="{{path('app_reclamation')}}">RECLAMATION</a></li>
+                                        <li><a href={{path('app_home')}}>ACCEUIL</a></li>
+                                        <li><a href={{path('app_club')}}>CLUB</a></li>
+                                        <li><a href={{path('app_tournois')}}>TOURNOIS</a></li>
+                                        <li><a href={{path('app_magasin')}}>MAGASIN</a></li>
+                                        <li><a href={{path('app_reclamation')}}>RECLAMATION</a></li>
                                         
                                 </ul>
                             </div>
@@ -442,7 +454,10 @@
                             </div>
                             <div class="fw-link">
                                 <ul>
-                                   <li><a href="{{path('app_about')}}">ABOUT</a></li>
+                                    <li><a href={{path('app_about')}}>ABOUT</a></li>
+                                    
+                                    <li><a href={{path('app_profile')}}>Profile</a></li>
+                                    
                                   
                                 </ul>
                             </div>
@@ -473,7 +488,7 @@
         
     </footer>
     <!-- footer-area-end -->
-
+    {% endblock %}
 
 
 
