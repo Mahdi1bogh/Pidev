@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
 class Participant
@@ -15,9 +14,7 @@ class Participant
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message:"Date participation is required")]
-    #[Assert\GreaterThanOrEqual("now")]
-    private ?\DateTime $dateP = null;
+    private ?\DateTimeImmutable $dateP = null;
 
     #[ORM\ManyToOne(inversedBy: 'participants')]
     private ?Tournois $tournois = null;
@@ -30,12 +27,12 @@ class Participant
         return $this->id;
     }
 
-    public function getDateP(): ?\DateTime
+    public function getDateP(): ?\DateTimeImmutable
     {
         return $this->dateP;
     }
 
-    public function setDateP(\DateTime $dateP): self
+    public function setDateP(\DateTimeImmutable $dateP): self
     {
         $this->dateP = $dateP;
 
@@ -64,10 +61,5 @@ class Participant
         $this->users = $users;
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->getId();
     }
 }

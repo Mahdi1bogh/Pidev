@@ -55,7 +55,7 @@ body {
 	font-style: normal;
 	font-size: 15px;
 	font-weight: 500;
-	color: #d4d4d4;
+	color: #3f3939;
 }
 .img {
 	max-width: 100%;
@@ -110,7 +110,7 @@ h4,
 h5,
 h6 {
 	font-family: 'Oxanium', cursive;
-	color: #fff;
+	color: #000000;
 	margin-top: 0px;
 	font-style: normal;
 	font-weight: 800;
@@ -212,7 +212,7 @@ label {
 }
 /* button style */
 .btn {
-	-moz-user-select: none;
+	
 	border: medium none;
 	border-radius: 5px;
 	color: #1c1121;
@@ -6691,3 +6691,125 @@ ul.minicart .cart-price .new {
 .home-six-footer .copyright-wrap {
     padding: 31px 0;
 }
+
+.imagess{
+	width: 250px;
+	height: 250px;
+}
+@media (min-width: 1200px) {
+	.logooo {
+	  width: 100px;
+	  height: 100px;
+	}
+  }
+  
+  .logooo img {
+	max-height: 16px;
+	margin-right: 6px;
+  }
+  .logooo {
+	line-height: 1;
+  }
+  .h1 {
+	font-size: 24px !important;
+	display: inline-block !important;
+	color: #0e0f15;
+	
+	}
+	/* Styles pour les avis */
+.avis {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.avis h2 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.avis p {
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 10px;
+	color: #000000;
+}
+
+.avis a {
+    color: #007bff;
+}
+
+.avis a:hover {
+    text-decoration: underline;
+}
+
+/* Styles pour le bouton "Créer nouveau" */
+.create-button {
+    display: block;
+    width: 200px;
+    height: 40px;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-decoration: none;
+}
+
+.create-button:hover {
+    background-color: #0062cc;
+}
+.mydesign{
+	width: auto;
+	height: auto;
+	background-color: orange;
+	box-shadow: 0px 0px 7px 0px black;
+}
+.mydesignn{
+	width: auto;
+	height: auto;
+	background-color: black;
+	box-shadow: 0px 0px 7px 0px black;
+}
+.pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+  }
+  
+  .pagination a {
+	color: #000;
+	text-decoration: none;
+	padding: 5px 10px;
+	border: 1px solid #ccc;
+	margin: 0 5px;
+	border-radius: 5px;
+  }
+  
+  .pagination .active {
+	background-color: #007bff;
+	color: #fff;
+  }
+  
+  .pagination .prev,
+  .pagination .next {
+	font-size: 18px;
+	font-weight: bold;
+  }
+  
+  .pagination .prev:hover,
+  .pagination .next:hover,
+  .pagination .page:hover {
+	background-color: #007bff;
+	color: #fff;
+  }
+  
+  .pagination .prev:disabled,
+  .pagination .next:disabled,
+  .pagination .page:disabled {
+	opacity: 0.5;
+	cursor: default;
+  }
+  
+

@@ -61,7 +61,6 @@ class User
     {
         return $this->id;
     }
-   
 
     public function getNom(): ?string
     {
@@ -248,11 +247,8 @@ class User
 
         return $this;
     }
-
-    public function __toString()
-    {
-        return $this->getId();
+    public function __toString() {
+        return $this->email;
     }
-
 
 }
