@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
 {% block title %}Tournois index{% endblock %}
 
@@ -108,7 +108,7 @@
                                                                     
                                                                     </div>
                                                                     <div class="remove">
-                                                                      <a  type="button">{{ include('tournois/_delete_form.html.twig') }}</a>
+                                                                      <a href="{{ path('app_tournois_show', {'id': tournoi.id}) }}">show</a>
                                                                     </div>
                                                                 </div>
                                                             </td>

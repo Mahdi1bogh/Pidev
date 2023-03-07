@@ -41,7 +41,7 @@ class Tournois
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\OneToMany(mappedBy: 'tournois', targetEntity: Participant::class )]
+    #[ORM\OneToMany(mappedBy: 'tournois', targetEntity: Participant::class)]
     private Collection $participants;
 
     #[ORM\Column]

@@ -5,11 +5,11 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
         tournois_directory: '%kernel.project_dir%/public/uploads/tournois'
-        twilio.account_sid: 'AC1799169edec026ec9bb4b78a26eeea54'
-        twilio.auth_token: 'e6a4332497d3e1c52d844c9a64e0f18f'
+        images_directory: '../public/images/'
+        twilio.account_sid: 'AC6af6f446e8517acc6af577e01ae4bbda'
+        twilio.auth_token: 'afc9b0fb358806fca541caddef2847a7'
         twilio.from_number: '+12766336518'
 services:
-
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -26,4 +26,3 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    

@@ -39,20 +39,35 @@ class ClubRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Club[] Returns an array of Club objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   
+    public function recherche($value): array
+    {
+        $qb= $this->createQueryBuilder('c')
+            ->andWhere('c.id LIKE :val')
+            ->orWhere('c.name LIKE :val')
+            ->orWhere(' c.location LIKE :val')
+            ->setParameter('val', '%'.$value.'%');
+          
+         return $qb->getQuery()->getResult();
+        
+    }
+   
+       public function Trieparclub(): array
+   {
+       return $this->createQueryBuilder('c')
+           ->orderBy('c.name', 'ASC')
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+   public function sortt($sort): array
+   {
+       return $this->createQueryBuilder('c')
+           ->orderBy('c.' . $sort, 'ASC')
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?Club
 //    {

@@ -68,18 +68,22 @@
                         <span></span>
                     </span>
                 </button>
-
+{# <div>
+    <form id="search-form"  action ="{{path('searchu')}}" >
+     <input type="text" placeholder="Search here..." name ="q" id="search-input"  >
+    
+    <button type="submit">Rechercher</button> </form>
+    <div> #}
                 <!-- App Search-->
-                <form class="app-search d-none d-md-block">
+                <form id ="search-form" action ="{{path('searchu')}}"class="app-search ">
                     <div class="position-relative">
-                        <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
-                            id="search-options" value="">
-                        <span class="mdi mdi-magnify search-widget-icon"></span>
-                        <span class="mdi mdi-close-circle search-widget-icon search-widget-icon-close d-none"
-                            id="search-close-options"></span>
+                        <input type="text" class="form-control" placeholder="Search..." 
+                            name ="q" id="search-input">
+                        
                     </div>
                     
                 </form>
+                
             </div>
 
             <div class="d-flex align-items-center">
@@ -177,11 +181,22 @@
                               <i class="ri-honour-line"></i> <span data-key="t-widgets">Dashbord</span>
                            </a>
                         </li>
-                        
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="widgets.html">
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets">Gérer Users</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link"  href={{path('app_tournois_index')}}>
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets">Gérer Tournois</span>
+                            </a>
+                        </li>
 
-                      
-
-
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href={{path('app_participant_index')}}>
+                                <i class="ri-honour-line"></i> <span data-key="t-widgets">Gérer Participants</span>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="widgets.html">
                                 <i class="ri-honour-line"></i> <span data-key="t-widgets">Gérer Produits</span>
@@ -194,7 +209,7 @@
                             </a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link menu-link" href="widgets.html">
+                            <a class="nav-link menu-link" href="/club">
                                 <i class="ri-honour-line"></i> <span data-key="t-widgets">Gérer Clubs</span>
                             </a>
                         </li>
@@ -208,6 +223,11 @@
                                 <i class="ri-honour-line"></i> <span data-key="t-widgets">Gérer Réclamation</span>
                             </a>
                         </li>
+                         </li>
+                        <li class="nav-item">
+                         <td><a href="/home" type="button" class="btn btn-outline-success"> Retour a la page d'acceuil </a></td>
+                         </li>
+                       
 
                        
 
@@ -776,6 +796,7 @@
     <script src="{{asset('back-office/libs/feather-icons/feather.min.js')}}"></script>
     <script src="{{asset('back-office/js/pages/plugins/lord-icon-2.1.0.js')}}"></script>
     <script src="{{asset('back-office/js/plugins.js')}}"></script>
+    <script src="{{asset('back-office/js/searchUser.js')}}"></script>
     <!-- apexcharts -->
     <script src="{{asset('back-office/libs/apexcharts/apexcharts.min.js')}}"></script>
     <!-- Vector map-->

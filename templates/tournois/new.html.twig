@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
 {% block title %}New Tournois{% endblock %}
 
@@ -29,7 +29,7 @@
 
     {{ include('tournois/_form.html.twig') }}
 
-    <a href="{{ path('app_tournois_index') }}" class="btn btn-primary waves-effect waves-light">back to list</a>
+    <a href="{{ path('app_tournois_index') }}">back to list</a>
 
                
             </div>

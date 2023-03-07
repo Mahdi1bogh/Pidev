@@ -2,14 +2,50 @@
 
 namespace App\Controller;
 
-use App\Entity\Tournois;
-use App\Repository\TournoisRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Exploit;
+use App\Entity\Tournois;
+use App\Entity\User;
+use App\Form\SignupformType;
+use App\Repository\TournoisRepository;
+use App\Repository\UserRepository;
+use App\Security\EmailVerifier;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+//use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+//use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+//use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\VarDumper\VarDumper;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Swift_Message;
+use Swift_Mailer;
+use Swift_SmtpTransport;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Security;
 
 class HomeController extends AbstractController
 {
+    
+    /**
+     * @var Security
+     */
+    private $security;
+
+    public function __construct(Security $security)
+    {
+       $this->security = $security;
+    }
     #[Route('/home', name: 'app_home')]
     public function index(): Response
     {
@@ -50,8 +86,6 @@ class HomeController extends AbstractController
         ]);
     }
 
-  
-
     #[Route('/tournoisfront', name: 'app_tournois', methods: ['GET'])]
     public function index5(TournoisRepository $tournoisRepository): Response
     {
@@ -59,8 +93,6 @@ class HomeController extends AbstractController
             'tournois' => $tournoisRepository->findAll(),
         ]);
     }
-
-
     #[Route('/tournoisdetails/{id}', name: 'app_details', methods: ['GET'])]
     public function show(Tournois $tournoi): Response
     {
@@ -69,11 +101,72 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/login', name: 'app_login')]
-    public function index6(): Response
+    #[Route('/signup', name: 'app_signup')]
+    public function index6(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager,UserRepository $userR): Response
     {
-        return $this->render('home/login.html.twig', [
+
+        
+        $user = new User();
+        
+    
+
+        $form = $this->createForm(SignupformType::class,$user);
+
+        $form->handleRequest($request);
+
+
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            // encode the plain password
+            $userData = $form->getData();
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $userData->getPassword()
+                )
+               
+            );
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile=$form['image']->getData();
+            $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+            $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFile = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
+            $uploadedFile->move(
+                $destination,
+                $newFile
+               );
+
+               $user->setImage($newFile);
+
+               $user->setRoles(['ROLE_USER']);
+
+               $entityManager->persist($user);
+               $entityManager->flush();
+               $mail = $user->getEmail();
+               $transport = (new Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
+            ->setUsername('recycle.tunisia')
+            ->setPassword('ztntffukvpwraygm');
+        
+             $mailer = new Swift_Mailer($transport);
+             
+             $user = $this->security->getUser(); 
+             $userr = $userR->find($user);
+             $email = $userr->getEmail();
+              $message = (new Swift_Message('Ajout dun utilisateur avec succes '))
+                ->setFrom(['recycle.tunisia@gmail.com' => 'Recycle tunisia'])
+                ->setTo([$mail])
+                ->setBody('un utilisateur  a ete ajoutee avec succes');
+            $mailer->send($message); 
+
+        }
+
+
+        
+        return $this->render('home/register.html.twig', [
             'controller_name' => 'HomeController',
+            'formUser' => $form->createView(),
+            "user" => $user ,"i"=>$user
         ]);
     }
 
@@ -90,8 +183,29 @@ class HomeController extends AbstractController
     {
         return $this->render('home/panier.html.twig', [
             'controller_name' => 'HomeController',
+            
         ]);
     }
+    
+    
+    #[Route('/login', name: 'app_login')]
+    public function index9(authenticationUtils $authenticationUtils,Request $request ,EntityManagerInterface $entityManager): Response
+    {
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $email = $authenticationUtils->getLastUsername();
+       
+       
+        
+        return $this->render('security/login.html.twig', [
+            'email' => $email , 
+            'error' => $error ,
+            
+        ]);
+    }
+
 
     #[Route('/calender', name: 'app_calender')]
     public function calender(TournoisRepository $calendar)
@@ -115,7 +229,4 @@ class HomeController extends AbstractController
 
         return $this->render('home/calendar.html.twig', compact('data'));
     }
-
-
- 
 }

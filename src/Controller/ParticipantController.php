@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twilio\Rest\Client;
-
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
@@ -125,35 +124,12 @@ class ParticipantController extends AbstractController
 
 
     
-    #[Route('/pdfparticiper/{id}', name: 'app_pdfparticiper', methods: ['GET'])]
-    public function PDFParticipant(ParticipantRepository $participantRepository): Response
-    {
-        $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Arial');
-        $dompdf = new Dompdf($pdfOptions);
-        $html =  $this->render('participant/pdfpart.html.twig', [
-            'participants' => $participantRepository->findAll(),
-        ]);
-    
 
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
-    
-        $dompdf->render();
-        $dompdf->stream("Participantpdf.pdf", [
-            "participants" => true
-        ]);
-       return $this->redirectToRoute('app_participant_index', [], Response::HTTP_SEE_OTHER);
-    }
 
     
 
     
  
-
-    
-
-
 }
 
 
